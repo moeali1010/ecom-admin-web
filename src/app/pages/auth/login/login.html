@@ -1,0 +1,50 @@
+<div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h3 class="text-center mb-4">Login</h3>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="text" class="form-control" formControlName="usernameOrEmail"
+                        placeholder="Enter your name or email" required>
+
+                    <div *ngIf="submitted && f['usernameOrEmail'].errors" class="text-danger small mt-1">
+                        <div *ngIf="f['usernameOrEmail'].errors['required']">This field is required</div>
+                        <div *ngIf="f['usernameOrEmail'].errors['invalidUsernameOrEmail']">Enter a valid username or
+                            email</div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required
+                        formControlName="password">
+
+                    <div *ngIf="submitted && f['password'].errors" class="text-danger small mt-1">
+                        <div *ngIf="f['password'].errors['required']">Password is required</div>
+                        <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+                    </div>
+                </div>
+
+                <!-- Forget Password -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="text-decoration-none text-primary small">Forget Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 rounded-3">Login</button>
+            </form>
+
+
+
+
+        </div>
+    </div>
+</div>

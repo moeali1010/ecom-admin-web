@@ -1,0 +1,21 @@
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-between align-items-center px-3">
+  <!-- زرار القائمة -->
+  <button class="btn btn-outline-light" (click)="toggleSidebar.emit()">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- لينكات اللغات -->
+  <div class="language-switcher">
+    <a 
+      *ngFor="let lang of languages" 
+      href="javascript:void(0)" 
+      [class.active]="currentLang === lang.code"
+      [class.disabled]="currentLang === lang.code"
+      (click)="currentLang !== lang.code && switchLanguage(lang.code)">
+      {{ lang.label }}
+    </a>
+  </div>
+
+  <!-- اللوجو أو العنوان -->
+  <span class="navbar-brand mb-0 h1">Admin Panel</span>
+</nav>

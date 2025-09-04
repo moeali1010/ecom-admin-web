@@ -1,0 +1,53 @@
+.sidebar {
+   &.rtl {
+    left: auto;
+    right: 0; // لما تكون عربي
+  }
+  width: 220px;
+  background-color: #343a40;
+  color: white;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+
+  .nav-link {
+    color: #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+
+    &:hover {
+      background-color: #495057;
+      color: #fff;
+    }
+
+    i {
+      font-size: 1.2rem;
+      width: 24px;   // ⬅️ نخلي للـ icon عرض ثابت
+      text-align: center;
+    }
+  }
+
+  .link-text {
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  &.collapsed {
+    width: 70px;
+
+    .link-text {
+      display: none;   // ⬅️ نخفي النصوص بدل opacity بس
+    }
+
+    .nav-link {
+      justify-content: center;   
+      gap: 0;                   
+    }
+  }
+}
