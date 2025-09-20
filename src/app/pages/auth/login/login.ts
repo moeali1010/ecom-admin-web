@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { loginService } from '../../../services/login';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule],
@@ -12,7 +13,7 @@ export class Login {
   loginForm: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder , private loginService: loginService) {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required, this.usernameOrEmailValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -47,5 +48,15 @@ export class Login {
 
     console.log('✅ Form Data:', this.loginForm.value);
     // هنا هتعمل API call للـ login
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
+        // ممكن تحفظ التوكن في الـ localStorage أو تعمل redirect
+      },
+      error: (error) => {
+        console.error('Login failed:', error);
+        // ممكن تعرض رسالة خطأ للمستخدم
+      }
+    }); 
   }
 }

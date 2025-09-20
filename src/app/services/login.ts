@@ -6,11 +6,11 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class Login {
+export class loginService {
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    const url = `${environment.apiUrl}/api/auth/login`;
+    const url = `${environment.apiUrl}/auth/login`;
     return this.http.post(url, credentials);
   }
 }
