@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { loginService } from '../../../services/login';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, MatSnackBarModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -13,7 +15,11 @@ export class Login {
   loginForm: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder , private loginService: loginService) {
+  constructor(
+    private fb: FormBuilder,
+    private loginService: loginService,
+    private snackBar: MatSnackBar
+  ) {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required, this.usernameOrEmailValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -29,12 +35,11 @@ export class Login {
     const usernameRegex = /^[a-zA-Z0-9._-]{3,}$/;
 
     if (emailRegex.test(value) || usernameRegex.test(value)) {
-      return null; // valid
+      return null;
     }
     return { invalidUsernameOrEmail: true };
   }
 
-  // 🟢 Getter علشان أسهل النداء في الـ HTML
   get f() {
     return this.loginForm.controls;
   }
@@ -51,12 +56,13 @@ export class Login {
     this.loginService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
-        // ممكن تحفظ التوكن في الـ localStorage أو تعمل redirect
       },
       error: (error) => {
         console.error('Login failed:', error);
-        // ممكن تعرض رسالة خطأ للمستخدم
-      }
-    }); 
+        this.snackBar.open(error?.error?.message, '', {
+          panelClass: ['snackbar-error'],
+        });
+      },
+    });
   }
 }
