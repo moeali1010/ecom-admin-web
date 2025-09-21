@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { loginService } from '../../../services/login';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule, MatSnackBarModule],
@@ -18,7 +18,8 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private loginService: loginService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar ,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required, this.usernameOrEmailValidator]],
@@ -56,6 +57,11 @@ export class Login {
     this.loginService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
+        // save token to local storage
+        localStorage.setItem('token', response.token);
+      
+        // redirect to dashboard or home page
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('Login failed:', error);
