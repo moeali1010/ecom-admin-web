@@ -28,4 +28,13 @@ export class Header {
       document.documentElement.setAttribute('dir', 'ltr');
     }
   }
+
+  logout(){
+    // هنا يمكنك إضافة منطق تسجيل الخروج
+    localStorage.clear(); // على سبيل المثال، مسح بيانات المستخدم من التخزين المحلي
+    console.log('Logging out...');
+    // على سبيل المثال، إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
+    window.location.href = '/login';
+
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 @Component({
@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [TranslateModule, TranslatePipe],
   templateUrl: './dashboard.html',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   protected readonly title = signal('ngx-translate-demo-standalone');
+  ngOnInit() {}
 }

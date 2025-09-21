@@ -18,7 +18,7 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private loginService: loginService,
-    private snackBar: MatSnackBar ,
+    private snackBar: MatSnackBar,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -52,22 +52,10 @@ export class Login {
       return;
     }
 
-    console.log('✅ Form Data:', this.loginForm.value);
-    // هنا هتعمل API call للـ login
     this.loginService.login(this.loginForm.value).subscribe({
       next: (response) => {
-        console.log('Login successful:', response);
-        // save token to local storage
         localStorage.setItem('token', response.token);
-      
-        // redirect to dashboard or home page
         this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        console.error('Login failed:', error);
-        this.snackBar.open(error?.error?.message, '', {
-          panelClass: ['snackbar-error'],
-        });
       },
     });
   }

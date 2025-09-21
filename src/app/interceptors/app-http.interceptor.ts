@@ -9,12 +9,16 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import ar from '../../../public/i18n/ar.json';
 import en from '../../../public/i18n/en.json';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const lang = this.translateService.getCurrentLang() || 'en';
@@ -35,9 +39,11 @@ export class AppHttpInterceptor implements HttpInterceptor {
             errorMsg = translations.server_error;
             break;
           default:
-            errorMsg = translations.general_error;
+            errorMsg = error?.error?.message || translations.general_error;
         }
-        alert(errorMsg);
+        this.snackBar.open(errorMsg, '', {
+          panelClass: ['snackbar-error'],
+        });
         return throwError(() => error);
       })
     );
