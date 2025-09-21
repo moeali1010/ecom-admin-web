@@ -1,9 +1,9 @@
 {
- "dashboard": "Dashboard",
- "settings": "Settings",
- "profile": "Profile",
-	"logout": "Logout",
-	"not_found": "Page not found",
-	"server_error": "Server error",
-	"general_error": "An error occurred"
+  "dashboard": "Dashboard",
+  "settings": "Settings",
+  "profile": "Profile",
+  "logout": "Logout",
+  "not_found": "Page not found",
+  "server_error": "Server error",
+  "general_error": "An error occurred"
 }
