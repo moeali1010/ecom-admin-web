@@ -31,6 +31,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     return next.handle(clonedReq).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
+        console.log('HTTP Error:', error);
         switch (error.status) {
           case 404:
             errorMsg = translations.not_found;
