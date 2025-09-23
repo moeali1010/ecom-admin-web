@@ -1,52 +1,41 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest,
-  HttpErrorResponse,
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+//
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import ar from '../../../public/i18n/ar.json';
-import en from '../../../public/i18n/en.json';
+import { catchError, throwError } from 'rxjs';
 
-@Injectable()
-export class AppHttpInterceptor implements HttpInterceptor {
-  constructor(
-    private translateService: TranslateService,
-    private snackBar: MatSnackBar
-  ) {}
+export const appInterceptor: HttpInterceptorFn = (req, next) => {
+  const translate = inject(TranslateService);
+  const snackBar = inject(MatSnackBar);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const lang = this.translateService.getCurrentLang() || 'en';
-    const translations = lang === 'ar' ? ar : en;
-    const clonedReq = req.clone({
-      setHeaders: {
-        'Accept-Language': lang,
-      },
-    });
-    return next.handle(clonedReq).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMsg = '';
-        console.log('HTTP Error:', error);
-        switch (error.status) {
-          case 404:
-            errorMsg = translations.not_found;
-            break;
-          case 500:
-            errorMsg = translations.server_error;
-            break;
-          default:
-            errorMsg = error?.error?.message || translations.general_error;
-        }
-        this.snackBar.open(errorMsg, '', {
-          panelClass: ['snackbar-error'],
-        });
-        return throwError(() => error);
-      })
-    );
-  }
-}
+  // 🔹1) إضافة Accept-Language في كل request
+  const lang = translate.currentLang || 'en';
+  const langReq = req.clone({
+    setHeaders: {
+      'Accept-Language': lang,
+    },
+  });
+
+  // 🔹2) معالجة الأخطاء
+  return next(langReq).pipe(
+    catchError((error) => {
+      let message = '';
+
+      if (error.error && error.error.message) {
+        // الرسالة مترجمة من الـ Backend
+        message = error.error.message;
+      } else {
+        // fallback: رسالة عامة من Angular i18n
+        message = translate.instant('unknown_error');
+      }
+
+      // عرض الرسالة في الـ Snackbar
+      snackBar.open(message,'', {
+        panelClass: ['snackbar-error'], 
+      });
+
+      return throwError(() => error);
+    })
+  );
+};

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login {
-  loginForm: FormGroup;
+export class Login implements OnInit {
+  loginForm!: FormGroup;
   submitted = false;
 
   constructor(
@@ -20,14 +20,15 @@ export class Login {
     private loginService: loginService,
     private snackBar: MatSnackBar,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required, this.usernameOrEmailValidator]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  // ✅ Validator مخصص: يقبل يا إيميل صحيح أو يوزرنيم (أي نص بدون مسافات)
   usernameOrEmailValidator(control: any) {
     const value = control.value;
     if (!value) return null;
@@ -56,7 +57,7 @@ export class Login {
       next: (response) => {
         localStorage.setItem('token', response.token);
         this.router.navigate(['/dashboard']);
-      },
+      }
     });
   }
 }
