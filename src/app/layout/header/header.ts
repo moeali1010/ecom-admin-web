@@ -3,11 +3,13 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatMenuModule, MatButtonModule],
+  imports: [CommonModule, TranslateModule, MatMenuModule, MatButtonModule, MatToolbarModule, MatIconModule],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })

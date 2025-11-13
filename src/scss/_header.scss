@@ -1,3 +1,6 @@
 .navbar {
   box-shadow: 0px 2px 10px #e1e1e1;
 }
+.mat-toolbar-row, .mat-toolbar-single-row{
+ align-items: first baseline !important;
+}
