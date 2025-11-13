@@ -2,10 +2,22 @@
   <app-header (toggleSidebar)="toggleSidebar()"></app-header>
 
   <div class="d-flex flex-grow-1">
-    <app-sidebar [collapsed]="isSidebarCollapsed"></app-sidebar>
+    <!-- السايدبار -->
+    <app-sidebar 
+      [collapsed]="isSidebarCollapsed"
+      [class.mobile]="isMobile"
+      [class.show]="sidebarVisible">
+    </app-sidebar>
+
+    <!-- Backdrop للموبايل -->
+    <div 
+      *ngIf="isMobile && sidebarVisible" 
+      class="backdrop" 
+      (click)="closeSidebar()">
+    </div>
 
     <main class="flex-grow-1 p-3">
-      <router-outlet />
+      <router-outlet></router-outlet>
     </main>
   </div>
 

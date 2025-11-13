@@ -1,15 +1,15 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  styleUrls: ['./header.scss'],
 })
-export class Header {
+export class HeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
 
   languages = [
@@ -17,26 +17,33 @@ export class Header {
     { code: 'ar', label: 'العربية' },
   ];
 
-  currentLang = 'en'; // الافتراضي
-  constructor(private translateService: TranslateService) {}
+  currentLang = 'en';
+
+  constructor(private translateService: TranslateService) {
+    // تعيين اللغة الافتراضية
+    this.translateService.setDefaultLang(this.currentLang);
+    this.applyDirection(this.currentLang);
+  }
 
   switchLanguage(lang: string) {
     this.currentLang = lang;
     this.translateService.use(lang);
+    this.applyDirection(lang);
+  }
 
+  private applyDirection(lang: string) {
     if (lang === 'ar') {
       document.documentElement.setAttribute('dir', 'rtl');
+      document.documentElement.setAttribute('lang', 'ar');
     } else {
       document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
     }
   }
 
-  logout(){
-    // هنا يمكنك إضافة منطق تسجيل الخروج
-    localStorage.clear(); // على سبيل المثال، مسح بيانات المستخدم من التخزين المحلي
+  logout() {
+    localStorage.clear();
     console.log('Logging out...');
-    // على سبيل المثال، إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
     window.location.href = '/login';
-
   }
 }

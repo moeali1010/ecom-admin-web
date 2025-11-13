@@ -1,12 +1,8 @@
 .sidebar {
-   &.rtl {
-    left: auto;
-    right: 0; // لما تكون عربي
-  }
   width: 220px;
   background-color: #343a40;
   color: white;
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
   overflow: hidden;
   height: 100vh;
   position: sticky;
@@ -28,7 +24,7 @@
 
     i {
       font-size: 1.2rem;
-      width: 24px;   // ⬅️ نخلي للـ icon عرض ثابت
+      width: 24px;
       text-align: center;
     }
   }
@@ -38,16 +34,49 @@
     white-space: nowrap;
   }
 
+  /* وضع الديسكتوب - كولابس */
   &.collapsed {
     width: 70px;
 
     .link-text {
-      display: none;   // ⬅️ نخفي النصوص بدل opacity بس
+      display: none;
     }
 
     .nav-link {
-      justify-content: center;   
-      gap: 0;                   
+      justify-content: center;
+      gap: 0;
     }
   }
+
+  /* وضع الموبايل - overlay */
+  &.mobile {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -220px;
+    z-index: 1050;
+    height: 100%;
+    transition: left 0.3s ease;
+
+    &.show {
+      left: 0;
+    }
+  }
+
+  /* RTL support */
+  &.rtl {
+    left: auto;
+    right: 0;
+  }
+}
+
+/* Backdrop */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
 }
