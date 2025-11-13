@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output , OnInit } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
@@ -13,7 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Output() toggleSidebar = new EventEmitter<void>();
 
   languages = [
@@ -22,11 +22,17 @@ export class HeaderComponent {
   ];
 
   currentLang = 'en';
+  fullName : string | null = '';
 
   constructor(private translateService: TranslateService) {
     // تعيين اللغة الافتراضية
     this.translateService.setDefaultLang(this.currentLang);
     this.applyDirection(this.currentLang);
+  }
+
+
+  ngOnInit() {
+    this.fullName = JSON.parse(localStorage.getItem('fullName') || '""');
   }
 
   switchLanguage(lang: string) {

@@ -55,9 +55,12 @@ export class Login implements OnInit {
 
     this.loginService.login(this.loginForm.value).subscribe({
       next: (response) => {
+        console.log('Login successful:', response);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('fullName', JSON.stringify(response.fullName));
+        localStorage.setItem('role', JSON.stringify(response.role));
         this.router.navigate(['/dashboard']);
-      }
+      },
     });
   }
 }
