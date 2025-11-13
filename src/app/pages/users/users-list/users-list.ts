@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-users-list',
-  imports: [],
+  standalone: false,
   templateUrl: './users-list.html',
-  styleUrl: './users-list.scss'
+  styleUrls: ['./users-list.scss'],
 })
-export class UsersList {
-
-}
+export class UsersList {}

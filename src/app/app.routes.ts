@@ -13,11 +13,15 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
-      canActivate: [AuthGuard],
-      children: [
-        { path: 'dashboard', component: Dashboard }
-      ],
-    },
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'dashboard', component: Dashboard },
+      {
+        path: 'users',
+        loadChildren: () => import('./pages/users/users-module').then((m) => m.UsersModule),
+      },
+    ],
+  },
 
   { path: '**', component: NotFound },
 ];

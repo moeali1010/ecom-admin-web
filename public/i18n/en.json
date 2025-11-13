@@ -5,5 +5,6 @@
   "logout": "Logout",
   "not_found": "Page not found",
   "server_error": "Server error",
-  "general_error": "An error occurred"
+  "general_error": "An error occurred",
+  "users": "Users"
 }

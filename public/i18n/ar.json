@@ -5,5 +5,6 @@
   "logout": "تسجيل الخروج",
   "not_found": "الصفحة غير موجودة",
   "server_error": "خطأ في الخادم",
-  "general_error": "حدث خطأ ما"
+  "general_error": "حدث خطأ ما",
+  "users": "المستخدمين"
 }
