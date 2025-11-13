@@ -4,25 +4,29 @@
     <i class="bi bi-list"></i>
   </button>
 
-  <!-- لينكات اللغات -->
-  <div class="language-switcher">
-
-    <button mat-icon-button [matMenuTriggerFor]="langMenu">
-      <img src="flags/{{ currentLang }}.png" alt="{{ currentLang }}" width="24" /> 
-    </button>
-
-    <mat-menu #langMenu="matMenu">
-      <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)">
-        <img src="flags/{{ lang.code }}.png" width="24" style="margin-right: 8px" />
-        {{ lang.label }}
-      </button>
-    </mat-menu>
+  <div>
+    <img src="images/logo.jpg" alt="">
   </div>
+  <div class="d-flex align-items-start">
+    <!-- لينكات اللغات -->
+    <div class="language-switcher">
+      <button mat-icon-button [matMenuTriggerFor]="langMenu">
+        <img src="flags/{{ currentLang }}.png" alt="{{ currentLang }}" width="24" />
+      </button>
 
-  <!-- اللوجو -->
+      <mat-menu #langMenu="matMenu">
+        <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)">
+          <img src="flags/{{ lang.code }}.png" width="24" style="margin-right: 8px" />
+          {{ lang.label }}
+        </button>
+      </mat-menu>
+    </div>
 
-  <!-- زرار تسجيل الخروج -->
-  <button class="btn btn-danger ms-3" (click)="logout()">
-    {{ 'logout' | translate }}
-  </button>
+    <!-- اللوجو -->
+
+    <!-- زرار تسجيل الخروج -->
+    <button class="btn btn-danger ms-3" (click)="logout()">
+      {{ 'logout' | translate }}
+    </button>
+  </div>
 </nav>
