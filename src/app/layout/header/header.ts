@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, MatMenuModule, MatButtonModule],
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
@@ -30,6 +32,8 @@ export class HeaderComponent {
     this.translateService.use(lang);
     this.applyDirection(lang);
   }
+
+  
 
   private applyDirection(lang: string) {
     if (lang === 'ar') {

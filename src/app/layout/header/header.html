@@ -1,26 +1,28 @@
-<nav class="navbar navbar-dark bg-dark d-flex justify-content-between align-items-center px-3">
+<nav class="navbar navbar-light bg-light d-flex justify-content-between align-items-center px-3">
   <!-- زرار الهامبرجر (للموبايل) -->
-  <button class="btn btn-dark d-lg-none me-2" (click)="toggleSidebar.emit()">
+  <button class="btn btn-light d-lg-none me-2" (click)="toggleSidebar.emit()">
     <i class="bi bi-list"></i>
   </button>
 
   <!-- لينكات اللغات -->
   <div class="language-switcher">
-    <a
-      *ngFor="let lang of languages"
-      href="javascript:void(0)"
-      [class.active]="currentLang === lang.code"
-      [class.disabled]="currentLang === lang.code"
-      (click)="currentLang !== lang.code && switchLanguage(lang.code)">
-      {{ lang.label }}
-    </a>
+
+    <button mat-icon-button [matMenuTriggerFor]="langMenu">
+      <img src="flags/{{ currentLang }}.png" alt="{{ currentLang }}" width="24" /> 
+    </button>
+
+    <mat-menu #langMenu="matMenu">
+      <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)">
+        <img src="flags/{{ lang.code }}.png" width="24" style="margin-right: 8px" />
+        {{ lang.label }}
+      </button>
+    </mat-menu>
   </div>
 
   <!-- اللوجو -->
-  <span class="navbar-brand mb-0 h1">Admin Panel</span>
 
   <!-- زرار تسجيل الخروج -->
   <button class="btn btn-danger ms-3" (click)="logout()">
-    <i class="bi bi-box-arrow-right"></i> {{ 'logout' | translate }}
+    {{ 'logout' | translate }}
   </button>
 </nav>
